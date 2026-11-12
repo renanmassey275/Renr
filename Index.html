@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus | Rede Social</title>
+  <!-- Ícones modernos via Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Fonte Inter do Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- BARRA DE NAVEGAÇÃO SUPERIOR -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <i data-lucide="orbit" class="logo-icon"></i>
+        <span>Nexus</span>
+      </div>
+
+      <div class="search-bar">
+        <i data-lucide="search" class="search-icon"></i>
+        <input type="text" id="searchInput" placeholder="Pesquisar publicações ou pessoas...">
+      </div>
+
+      <div class="nav-actions">
+        <button id="themeToggle" class="icon-btn" title="Alternar Tema">
+          <i data-lucide="moon" id="themeIcon"></i>
+        </button>
+        <button class="icon-btn notification-btn" title="Notificações">
+          <i data-lucide="bell"></i>
+          <span class="badge">3</span>
+        </button>
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="Perfil" class="nav-avatar" id="navAvatar">
+      </div>
+    </div>
+  </header>
+
+  <!-- LAYOUT PRINCIPAL (3 COLUNAS) -->
+  <main class="main-grid">
+
+    <!-- COLUNA ESQUERDA: PERFIL E MENU -->
+    <aside class="sidebar-left">
+      <div class="card profile-card">
+        <div class="profile-cover"></div>
+        <div class="profile-info">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="Foto de Perfil" class="profile-avatar">
+          <h2 id="userNameDisplay">Camila Mendes</h2>
+          <p class="username" id="userHandleDisplay">@camilamendes</p>
+          <p class="bio" id="userBioDisplay">UI/UX Designer & Desenvolvedora Front-end. Apaixonada por tecnologia e café ☕</p>
+          
+          <div class="profile-stats">
+            <div>
+              <strong id="postsCount">0</strong>
+              <span>Posts</span>
+            </div>
+            <div>
+              <strong>1.420</strong>
+              <span>Seguidores</span>
+            </div>
+            <div>
+              <strong>385</strong>
+              <span>Seguindo</span>
+            </div>
+          </div>
+
+          <button class="btn-outline full-width" id="editProfileBtn">
+            <i data-lucide="edit-3"></i> Editar Perfil
+          </button>
+        </div>
+      </div>
+
+      <nav class="card side-menu">
+        <a href="#" class="menu-item active" data-filter="all">
+          <i data-lucide="home"></i> Página Inicial
+        </a>
+        <a href="#" class="menu-item" data-filter="liked">
+          <i data-lucide="heart"></i> Curtidos
+        </a>
+        <a href="#" class="menu-item" data-filter="saved">
+          <i data-lucide="bookmark"></i> Salvos
+        </a>
+      </nav>
+    </aside>
+
+    <!-- COLUNA CENTRAL: STORIES, CRIAR POST E FEED -->
+    <section class="feed-section">
+      
+      <!-- Stories -->
+      <div class="stories-container" id="storiesContainer">
+        <div class="story-card add-story">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="Seu Story">
+          <div class="add-story-btn"><i data-lucide="plus"></i></div>
+          <span>Seu Story</span>
+        </div>
+        <!-- Outros stories são renderizados via JS -->
+      </div>
+
+      <!-- Caixa de Criação de Publicação -->
+      <div class="card create-post-card">
+        <div class="create-post-top">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="Avatar" class="avatar-sm">
+          <textarea id="postContent" rows="2" placeholder="No que você está pensando hoje, Camila?"></textarea>
+        </div>
+
+        <!-- Preview de Imagem -->
+        <div id="imagePreviewContainer" class="image-preview hidden">
+          <img id="imagePreview" src="" alt="Preview">
+          <button id="removeImageBtn" class="remove-img-btn"><i data-lucide="x"></i></button>
+        </div>
+
+        <div class="create-post-actions">
+          <div class="media-buttons">
+            <label for="imageUpload" class="action-chip">
+              <i data-lucide="image" class="text-green"></i> Foto
+            </label>
+            <input type="file" id="imageUpload" accept="image/*" hidden>
+
+            <button type="button" class="action-chip" id="addImageUrlBtn">
+              <i data-lucide="link" class="text-blue"></i> URL da Imagem
+            </button>
+          </div>
+
+          <button id="publishBtn" class="btn-primary">
+            Publicar <i data-lucide="send"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Filtros Rápidos (Mobile/Desktop) -->
+      <div class="feed-tabs">
+        <button class="tab-btn active" data-filter="all">Para você</button>
+        <button class="tab-btn" data-filter="liked">Curtidos</button>
+        <button class="tab-btn" data-filter="saved">Salvos</button>
+      </div>
+
+      <!-- Lista de Publicações (Feed) -->
+      <div id="feedContainer" class="feed-list">
+        <!-- Os posts são inseridos dinamicamente pelo JavaScript -->
+      </div>
+    </section>
+
+    <!-- COLUNA DIREITA: TENDÊNCIAS E SUGESTÕES -->
+    <aside class="sidebar-right">
+      <div class="card">
+        <h3 class="card-title">Assuntos do Momento</h3>
+        <ul class="trending-list">
+          <li>
+            <span class="trend-category">Tecnologia · Em alta</span>
+            <strong>#DesenvolvimentoWeb</strong>
+            <small>12,4 mil posts</small>
+          </li>
+          <li>
+            <span class="trend-category">Design · Tendência</span>
+            <strong>#UIUXDesign</strong>
+            <small>8,9 mil posts</small>
+          </li>
+          <li>
+            <span class="trend-category">Brasil · Assunto</span>
+            <strong>Inteligência Artificial</strong>
+            <small>34,1 mil posts</small>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">Quem seguir</h3>
+        <div class="suggestions-list" id="suggestionsList">
+          <!-- Sugestões geradas via JS -->
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- MODAL DE EDIÇÃO DE PERFIL -->
+  <div id="profileModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Editar Perfil</h3>
+        <button id="closeModalBtn" class="icon-btn"><i data-lucide="x"></i></button>
+      </div>
+      <form id="editProfileForm">
+        <div class="form-group">
+          <label for="editName">Nome</label>
+          <input type="text" id="editName" required>
+        </div>
+        <div class="form-group">
+          <label for="editHandle">Nome de usuário (@)</label>
+          <input type="text" id="editHandle" required>
+        </div>
+        <div class="form-group">
+          <label for="editBio">Biografia</label>
+          <textarea id="editBio" rows="3"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-outline" id="cancelModalBtn">Cancelar</button>
+          <button type="submit" class="btn-primary">Salvar Alterações</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL DE VISUALIZAÇÃO DE STORY -->
+  <div id="storyModal" class="modal hidden">
+    <div class="story-viewer">
+      <div class="story-progress"><div class="story-progress-bar" id="storyProgressBar"></div></div>
+      <div class="story-header">
+        <div class="story-user">
+          <img id="storyViewerAvatar" src="" alt="">
+          <span id="storyViewerName"></span>
+        </div>
+        <button id="closeStoryBtn" class="icon-btn text-white"><i data-lucide="x"></i></button>
+      </div>
+      <img id="storyViewerImage" src="" alt="Story" class="story-full-img">
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+        </html>
